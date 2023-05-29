@@ -1,10 +1,12 @@
 import './App.css';
+import Header from "./Header.js";
 
 function App() {
   return (
     // BEM Convention
     <div className="app">
-      <h1>Hello Programmer</h1>
+      <Header />
+      {/* HOME */}
     </div>
   );
 }
