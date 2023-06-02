@@ -1,21 +1,40 @@
 import React, { useState } from 'react';
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // useNavigate used to be useHistory
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { db, auth } from "./firebase"; 
 
 function Login() {
+    const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const signIn = e => {
         e.preventDefault()
 
-        // firebase login stuff
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            navigate("/")
+        })
+        .catch((error) => {
+            alert(error.message)
+        });
     }
 
     const register = e => {
         e.preventDefault()
 
-        // firebase register stuff
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            if (userCredential) {
+                navigate("/")
+            }
+        })
+        .catch((error) => {
+            alert(error.message)
+        });
     }
 
   return (
@@ -33,7 +52,7 @@ function Login() {
                 <h5>E-mail</h5>
 
                 <input type="text" value={email} 
-                nChange={e => setEmail(e.target.value)} 
+                onChange={e => setEmail(e.target.value)} 
                 />
 
                 <h5>Password</h5>
