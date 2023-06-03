@@ -1,9 +1,10 @@
 import './App.css';
 import Header from "./Header.js";
 import Home from "./Home.js";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"; // "Routes" was formerly referred to as "Switch"
 import Checkout from './Checkout';
 import Login from "./Login";
+import Payment from './Payment';
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"; // "Routes" was formerly referred to as "Switch"
 import { auth } from "./firebase";
 import { useEffect } from 'react';
 import { useStateValue } from './StateProvider';
@@ -35,19 +36,22 @@ function App() {
   }, [])
 
   return (
-    // BEM Convention
+    // Route's elements are in fragments to allow rendering of multiple components
     <Router>
       <div className="app">
         <Routes>
-          <Route path="/login"
-          element={<> <Login/> </>} 
-          />
           <Route path="/" 
-          element={ <> <Header/> <Home/> </> } 
+            element={ <> <Header/> <Home/> </> } 
+          />
+          <Route path="/login"
+            element={<> <Login/> </>} 
           />
           <Route path="/checkout" 
-          element={ <> <Header/> <Checkout/> </> }
-          /> 
+            element={ <> <Header/> <Checkout/> </> }
+          />
+          <Route path="/payment"
+            element={<> <Header/> <Payment/> </>}
+          />
         </Routes>
       </div>
     </Router>
