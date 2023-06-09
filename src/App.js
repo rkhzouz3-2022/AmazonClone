@@ -8,6 +8,11 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom"; // "Rou
 import { auth } from "./firebase";
 import { useEffect } from 'react';
 import { useStateValue } from './StateProvider';
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+// Public key
+const promise = loadStripe("pk_test_51NFO7SKAhCobj7z7a0txd6hOPNeCSk8CJEVzu2FpwCe82L4sPpMdzB579PWtnoasOmaOhBKnWcJphXFmKMZ5GNJp00CpahAAzc");
 
 function App() {
 
@@ -50,7 +55,14 @@ function App() {
             element={ <> <Header/> <Checkout/> </> }
           />
           <Route path="/payment"
-            element={<> <Header/> <Payment/> </>}
+            element={
+              <> 
+              <Header/> 
+              <Elements stripe={promise}>
+                <Payment/> 
+              </Elements>
+              </>
+            }
           />
         </Routes>
       </div>
